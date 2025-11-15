@@ -26,8 +26,8 @@ This project provides automated scaling of GitHub Actions runners based on workf
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/gh-runner-controller
-cd gh-runner-controller
+git clone https://github.com/HueCodes/Zeno
+cd Zeno
 make build
 ./bin/controller
 ```
@@ -189,5 +189,5 @@ This project is licensed under the MIT License. See LICENSE file for details.
 
 ## Contact
 
-- Issues: https://github.com/yourusername/gh-runner-controller/issues
-- Discussions: https://github.com/yourusername/gh-runner-controller/discussions
+- Issues: https://github.com/HueCodes/Zeno/issues
+- Discussions: https://github.com/HueCodes/Zeno/discussions
