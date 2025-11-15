@@ -1,4 +1,4 @@
-# GitHub Actions Runner Controller
+# Zeno
 
 A lightweight controller for autoscaling self-hosted GitHub Actions runners.
 
