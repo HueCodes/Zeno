@@ -191,3 +191,4 @@ This project is licensed under the MIT License. See LICENSE file for details.
 
 - Issues: https://github.com/HueCodes/Zeno/issues
 - Discussions: https://github.com/HueCodes/Zeno/discussions
+- huecodes@proton.me
