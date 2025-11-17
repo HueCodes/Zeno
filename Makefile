@@ -5,10 +5,11 @@ help: ## Show this help
 
 build: ## Build the binary
 	@echo "Building..."
-	@go build -o bin/controller cmd/controller/main.go
+	@mkdir -p bin
+	@go build -o bin/controller ./cmd/controller
 
 run: ## Run the application
-	@go run cmd/controller/main.go
+	@go run ./cmd/controller
 
 test: ## Run tests
 	@go test -v -race ./...
@@ -37,7 +38,7 @@ deps: ## Download and tidy dependencies
 	@go mod tidy
 
 install: build ## Install binary to GOPATH/bin
-	@go install cmd/controller/main.go
+	@go install ./cmd/controller
 
 docker-build: ## Build Docker image
 	@docker build -f docker/Dockerfile -t Zeno:latest .
