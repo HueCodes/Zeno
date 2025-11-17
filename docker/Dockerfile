@@ -17,7 +17,7 @@ RUN go mod download
 COPY . .
 
 # Build binary with platform-specific flags
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -installsuffix cgo -ldflags '-w -s -X main.version=docker' -o controller cmd/controller/main.go
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -installsuffix cgo -ldflags '-w -s -X main.version=docker' -o controller ./cmd/controller
 
 # Final stage
 FROM alpine:latest
