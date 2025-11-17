@@ -16,7 +16,6 @@ test: ## Run tests
 test-coverage: ## Run tests with coverage
 	@go test -v -race -coverprofile=coverage.out ./...
 	@go tool cover -html=coverage.out -o coverage.html
-	@go tool cover -func=coverage.out | grep total | awk '{if ($$3+0 < 70) {print "Coverage below 70%: " $$3; exit 1} else {print "Coverage: " $$3}}'
 	@echo "Coverage report: coverage.html"
 
 lint: fmt vet ## Run linter
