@@ -75,7 +75,7 @@ jobs:
       run: go build -v -o bin/controller cmd/controller/main.go
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: controller-binary
         path: bin/controller
@@ -97,6 +97,6 @@ jobs:
         context: .
         file: docker/Dockerfile
         push: false
-        tags: Zeno:latest
+        tags: zeno:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
