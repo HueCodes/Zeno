@@ -1,5 +1,11 @@
 # Zeno
 
+[![CI](https://github.com/HueCodes/Zeno/workflows/CI/badge.svg)](https://github.com/HueCodes/Zeno/actions)
+[![codecov](https://codecov.io/gh/HueCodes/Zeno/branch/main/graph/badge.svg)](https://codecov.io/gh/HueCodes/Zeno)
+[![Go Report Card](https://goreportcard.com/badge/github.com/HueCodes/Zeno)](https://goreportcard.com/report/github.com/HueCodes/Zeno)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/v/release/HueCodes/Zeno)](https://github.com/HueCodes/Zeno/releases)
+
 A lightweight controller for autoscaling self-hosted GitHub Actions runners.
 
 ## Overview
@@ -22,6 +28,28 @@ This project provides automated scaling of GitHub Actions runners based on workf
 - Docker (optional, required for Docker provider)
 
 ## Installation
+
+### Binary Release
+
+Download the latest release for your platform:
+
+```bash
+# Linux AMD64
+curl -LO https://github.com/HueCodes/Zeno/releases/latest/download/zeno-linux-amd64
+chmod +x zeno-linux-amd64
+sudo mv zeno-linux-amd64 /usr/local/bin/zeno
+
+# macOS ARM64 (M1/M2)
+curl -LO https://github.com/HueCodes/Zeno/releases/latest/download/zeno-darwin-arm64
+chmod +x zeno-darwin-arm64
+sudo mv zeno-darwin-arm64 /usr/local/bin/zeno
+```
+
+### Docker Image
+
+```bash
+docker pull ghcr.io/huecodes/zeno:latest
+```
 
 ### From Source
 
@@ -122,6 +150,8 @@ In development:
 
 ## Roadmap
 
+See [docs/roadmap.md](docs/roadmap.md) for detailed development plans.
+
 **Phase 1 - Core Functionality**
 - Complete Docker provider implementation
 - Add comprehensive test coverage
@@ -143,6 +173,19 @@ In development:
 - Advanced scheduling algorithms
 - Custom metrics and webhooks
 - Web-based management dashboard
+
+## Comparison
+
+| Feature | Zeno | Actions Runner Controller | BuildKite | Jenkins |
+|---------|------|---------------------------|-----------|---------|
+| Kubernetes-native | ❌ | ✅ | ❌ | ❌ |
+| Standalone binary | ✅ | ❌ | ✅ | ❌ |
+| Multi-cloud | ✅ | Limited | ✅ | ✅ |
+| Webhook scaling | Roadmap | ✅ | ✅ | N/A |
+| Cost optimization | ✅ | Limited | ✅ | ❌ |
+| Setup complexity | Low | High | Medium | High |
+
+Zeno is designed for teams who want autoscaling runners without Kubernetes complexity.
 
 ## Contributing
 
@@ -183,9 +226,17 @@ This project is licensed under the MIT License. See LICENSE file for details.
 
 ## Documentation
 
-- [Setup Guide](docs/setup.md)
-- [API Reference](docs/api.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
+- [Quick Start Guide](docs/quickstart.md) - Get started in 5 minutes
+- [Setup Guide](docs/setup.md) - Detailed setup instructions
+- [Architecture](docs/architecture.md) - System design and components
+- [API Reference](docs/api.md) - REST API documentation
+- [Contributing Guidelines](CONTRIBUTING.md) - How to contribute
+
+## Community
+
+- **Issues**: [GitHub Issues](https://github.com/HueCodes/Zeno/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/HueCodes/Zeno/discussions)
+- **Security**: See [SECURITY.md](docs/security.md) for vulnerability reporting
 
 ## Contact
 

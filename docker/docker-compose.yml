@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: Zeno
+    container_name: zeno
     env_file:
       - ../.env
     environment:
@@ -19,6 +19,20 @@ services:
     restart: unless-stopped
     networks:
       - runner-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 128M
 
   prometheus:
     image: prom/prometheus:latest

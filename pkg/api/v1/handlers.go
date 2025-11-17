@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/yourusername/zeno/internal/analytics"
-	"github.com/yourusername/zeno/internal/runner"
+	"Zeno/internal/analytics"
+	"Zeno/internal/runner"
 )
 
 // Handler provides HTTP API endpoints
