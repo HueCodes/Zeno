@@ -21,7 +21,7 @@ func New(cfg *config.Config) (*Controller, error) {
 	if cfg == nil {
 		return nil, fmt.Errorf("config cannot be nil")
 	}
-	
+
 	ghClient := github.NewClient(cfg.GitHub.Token, cfg.GitHub.Organization, cfg.GitHub.Repository)
 	runnerMgr := runner.NewManager()
 
@@ -61,13 +61,13 @@ func (c *Controller) reconcile(ctx context.Context) error {
 	log.Printf("queued jobs: %d, current runners: %d", queuedJobs, currentRunners)
 
 	if queuedJobs >= c.cfg.Runner.ScaleUpThreshold && currentRunners < c.cfg.Runner.MaxRunners {
-		needed := min(queuedJobs-currentRunners, c.cfg.Runner.MaxRunners-currentRunners)
+		needed := minInt(queuedJobs-currentRunners, c.cfg.Runner.MaxRunners-currentRunners)
 		log.Printf("scaling up: adding %d runners", needed)
 		for i := 0; i < needed; i++ {
 			c.runnerMgr.Add()
 		}
 	} else if queuedJobs <= c.cfg.Runner.ScaleDownThreshold && currentRunners > c.cfg.Runner.MinRunners {
-		excess := currentRunners - max(c.cfg.Runner.MinRunners, queuedJobs)
+		excess := currentRunners - maxInt(c.cfg.Runner.MinRunners, queuedJobs)
 		if excess > 0 {
 			log.Printf("scaling down: removing %d runners", excess)
 			for i := 0; i < excess; i++ {
@@ -79,14 +79,14 @@ func (c *Controller) reconcile(ctx context.Context) error {
 	return nil
 }
 
-func min(a, b int) int {
+func minInt(a, b int) int {
 	if a < b {
 		return a
 	}
 	return b
 }
 
-func max(a, b int) int {
+func maxInt(a, b int) int {
 	if a > b {
 		return a
 	}

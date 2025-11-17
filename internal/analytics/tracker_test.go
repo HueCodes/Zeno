@@ -50,7 +50,7 @@ func TestRecordDecision(t *testing.T) {
 		Reason:       "queue above threshold",
 	}
 
-	tracker.RecordDecision(decision)
+	tracker.RecordDecision(&decision)
 
 	history := tracker.GetHistory(10)
 	if len(history) != 1 {
@@ -71,7 +71,7 @@ func TestGetHistoryLimit(t *testing.T) {
 
 	// Add 10 decisions
 	for i := 0; i < 10; i++ {
-		tracker.RecordDecision(models.ScalingDecision{
+		tracker.RecordDecision(&models.ScalingDecision{
 			Action:       "scale_up",
 			CurrentCount: i,
 			DesiredCount: i + 1,
@@ -102,7 +102,7 @@ func TestHistoryCapacity(t *testing.T) {
 
 	// Add 150 decisions (more than the 100 limit)
 	for i := 0; i < 150; i++ {
-		tracker.RecordDecision(models.ScalingDecision{
+		tracker.RecordDecision(&models.ScalingDecision{
 			Action:       "scale_up",
 			CurrentCount: i,
 			DesiredCount: i + 1,
@@ -129,7 +129,7 @@ func TestConcurrentAccess(t *testing.T) {
 	// Concurrent writes
 	go func() {
 		for i := 0; i < 50; i++ {
-			tracker.RecordDecision(models.ScalingDecision{
+			tracker.RecordDecision(&models.ScalingDecision{
 				Action: "scale_up",
 			})
 		}

@@ -95,7 +95,7 @@ func TestGetQueuedWorkflowJobsError(t *testing.T) {
 	defer server.Close()
 
 	client := NewClient("bad-token", "test-org", "")
-	
+
 	// This demonstrates error handling test structure
 	// Actual implementation would need server URL override
 	if client == nil {

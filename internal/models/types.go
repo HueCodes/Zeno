@@ -6,7 +6,7 @@ import "time"
 type Runner struct {
 	ID          string    `json:"id"`
 	Name        string    `json:"name"`
-	Status      string    `json:"status"` // idle, busy, offline
+	Status      string    `json:"status"`   // idle, busy, offline
 	Provider    string    `json:"provider"` // docker, aws, gcp, azure
 	Labels      []string  `json:"labels"`
 	StartedAt   time.Time `json:"started_at"`

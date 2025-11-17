@@ -31,7 +31,7 @@ func (c *Client) GetQueuedWorkflowJobs(ctx context.Context) (int, error) {
 		url = fmt.Sprintf("https://api.github.com/repos/%s/actions/runs?status=queued", c.repo)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, http.NoBody)
 	if err != nil {
 		return 0, err
 	}

@@ -32,8 +32,8 @@ func TestNew(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "nil config",
-			cfg:  nil,
+			name:    "nil config",
+			cfg:     nil,
 			wantErr: true,
 		},
 	}

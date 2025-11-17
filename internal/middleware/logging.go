@@ -21,14 +21,14 @@ func (rw *responseWriter) WriteHeader(code int) {
 func Logging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		
+
 		wrapped := &responseWriter{
 			ResponseWriter: w,
 			statusCode:     http.StatusOK,
 		}
-		
+
 		next.ServeHTTP(wrapped, r)
-		
+
 		log.Printf("%s %s %d %v", r.Method, r.URL.Path, wrapped.statusCode, time.Since(start))
 	})
 }

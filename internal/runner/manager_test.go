@@ -113,7 +113,7 @@ func TestManagerConcurrency(t *testing.T) {
 
 func TestRunnerID(t *testing.T) {
 	m := NewManager()
-	
+
 	m.Add()
 	m.Add()
 
@@ -136,7 +136,7 @@ func TestRunnerID(t *testing.T) {
 
 func TestRunnerStatus(t *testing.T) {
 	m := NewManager()
-	
+
 	m.Add()
 
 	m.mu.RLock()

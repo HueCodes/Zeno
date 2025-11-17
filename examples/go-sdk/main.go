@@ -11,11 +11,11 @@ import (
 const baseURL = "http://localhost:8080"
 
 type Metrics struct {
-	ActiveRunners   int    `json:"active_runners"`
-	IdleRunners     int    `json:"idle_runners"`
-	QueuedJobs      int    `json:"queued_jobs"`
-	RunningJobs     int    `json:"running_jobs"`
-	ReconcileErrors int    `json:"reconcile_errors"`
+	ActiveRunners   int `json:"active_runners"`
+	IdleRunners     int `json:"idle_runners"`
+	QueuedJobs      int `json:"queued_jobs"`
+	RunningJobs     int `json:"running_jobs"`
+	ReconcileErrors int `json:"reconcile_errors"`
 }
 
 func main() {

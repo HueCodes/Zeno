@@ -29,12 +29,12 @@ func (t *Tracker) UpdateMetrics(m models.Metrics) {
 }
 
 // RecordDecision records a scaling decision
-func (t *Tracker) RecordDecision(decision models.ScalingDecision) {
+func (t *Tracker) RecordDecision(decision *models.ScalingDecision) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 
 	decision.Timestamp = time.Now()
-	t.history = append(t.history, decision)
+	t.history = append(t.history, *decision)
 
 	// Keep only last 100 decisions
 	if len(t.history) > 100 {

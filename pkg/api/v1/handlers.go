@@ -25,7 +25,7 @@ func NewHandler(rm *runner.Manager, tracker *analytics.Tracker) *Handler {
 // HandleHealth returns service health status
 func (h *Handler) HandleHealth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{
+	_ = json.NewEncoder(w).Encode(map[string]string{
 		"status": "healthy",
 	})
 }
@@ -34,14 +34,14 @@ func (h *Handler) HandleHealth(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) HandleMetrics(w http.ResponseWriter, r *http.Request) {
 	metrics := h.tracker.GetMetrics()
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(metrics)
+	_ = json.NewEncoder(w).Encode(metrics)
 }
 
 // HandleRunners returns list of runners
 func (h *Handler) HandleRunners(w http.ResponseWriter, r *http.Request) {
 	// TODO: Implement once runner listing is available
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]interface{}{
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
 		"count":   h.runnerMgr.Count(),
 		"runners": []interface{}{},
 	})
@@ -51,5 +51,5 @@ func (h *Handler) HandleRunners(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) HandleHistory(w http.ResponseWriter, r *http.Request) {
 	history := h.tracker.GetHistory(50)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(history)
+	_ = json.NewEncoder(w).Encode(history)
 }
