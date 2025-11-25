@@ -81,8 +81,11 @@ func TestConfigValidate(t *testing.T) {
 					Organization: "org",
 				},
 				Runner: RunnerConfig{
-					MinRunners: 1,
-					MaxRunners: 10,
+					MinRunners:         1,
+					MaxRunners:         10,
+					ScaleUpThreshold:   5,
+					ScaleDownThreshold: 0,
+					CheckInterval:      30 * time.Second,
 				},
 			},
 			wantErr: false,
