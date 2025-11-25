@@ -79,12 +79,16 @@ Configuration is managed through environment variables:
 **Optional:**
 - `MIN_RUNNERS` - Minimum number of runners (default: 1)
 - `MAX_RUNNERS` - Maximum number of runners (default: 10)
-- `SCALE_UP_THRESHOLD` - Queue size to trigger scaling up (default: 5)
+- `SCALE_UP_THRESHOLD` - Queue size to trigger scaling up (default: 5, must be > SCALE_DOWN_THRESHOLD)
 - `SCALE_DOWN_THRESHOLD` - Queue size to trigger scaling down (default: 0)
-- `CHECK_INTERVAL_SEC` - Reconciliation interval in seconds (default: 30)
-- `RUNNER_PROVIDER` - Provider type: docker, aws, gcp, azure (default: docker)
+- `CHECK_INTERVAL_SEC` - Reconciliation interval in seconds (default: 30, must be > 0)
+- `RUNNER_PROVIDER` - Provider type: docker (in development), aws/gcp/azure (planned)
 
 See `.env.example` for complete configuration options.
+
+**Troubleshooting:**
+- GitHub API rate limits: 5000/hour for authenticated requests. Check `X-RateLimit-Reset` header if you see 403/429 errors.
+- Use standard logging to see reconciliation errors and scaling decisions.
 
 ## Architecture
 
@@ -133,18 +137,18 @@ make fmt
 ## Project Status
 
 Current implementation includes:
-- Core reconciliation loop
-- GitHub API client
-- Configuration management
+- Core reconciliation loop with caching
+- GitHub API client with timeout and rate limit handling
+- Configuration validation
 - REST API endpoints
 - Metrics collection
 - Docker infrastructure
 
 In development:
 - Full Docker provider implementation
-- AWS EC2 provider
-- GCP Compute Engine provider
-- Azure VM provider
+
+Planned:
+- AWS EC2, GCP Compute Engine, Azure VM providers
 - Webhook-based event handling
 - Web-based dashboard
 

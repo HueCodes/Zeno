@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 type Client struct {
@@ -16,10 +17,12 @@ type Client struct {
 
 func NewClient(token, org, repo string) *Client {
 	return &Client{
-		token:  token,
-		org:    org,
-		repo:   repo,
-		client: &http.Client{},
+		token: token,
+		org:   org,
+		repo:  repo,
+		client: &http.Client{
+			Timeout: 10 * time.Second, // Prevent hanging on network issues
+		},
 	}
 }
 
@@ -45,6 +48,12 @@ func (c *Client) GetQueuedWorkflowJobs(ctx context.Context) (int, error) {
 		return 0, err
 	}
 	defer resp.Body.Close()
+
+	// Handle rate limiting - GitHub returns 403 or 429 when rate limited
+	if resp.StatusCode == http.StatusForbidden || resp.StatusCode == http.StatusTooManyRequests {
+		resetTime := resp.Header.Get("X-RateLimit-Reset")
+		return 0, fmt.Errorf("rate limited (status: %d, reset: %s)", resp.StatusCode, resetTime)
+	}
 
 	if resp.StatusCode != http.StatusOK {
 		return 0, fmt.Errorf("unexpected status: %d", resp.StatusCode)

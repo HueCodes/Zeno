@@ -10,6 +10,7 @@ import (
 type Manager struct {
 	mu      sync.RWMutex
 	runners map[string]*Runner
+	order   []string // Track insertion order for deterministic removal
 }
 
 type Runner struct {
@@ -20,6 +21,7 @@ type Runner struct {
 func NewManager() *Manager {
 	return &Manager{
 		runners: make(map[string]*Runner),
+		order:   make([]string, 0),
 	}
 }
 
@@ -32,6 +34,7 @@ func (m *Manager) Add() {
 		ID:     id,
 		Status: "idle",
 	}
+	m.order = append(m.order, id)
 	log.Printf("runner added: %s", id)
 }
 
@@ -39,11 +42,15 @@ func (m *Manager) Remove() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	for id := range m.runners {
-		delete(m.runners, id)
-		log.Printf("runner removed: %s", id)
+	// Remove oldest runner (first in order slice) for deterministic behavior
+	if len(m.order) == 0 {
 		return
 	}
+
+	id := m.order[0]
+	m.order = m.order[1:]
+	delete(m.runners, id)
+	log.Printf("runner removed: %s", id)
 }
 
 func (m *Manager) Count() int {

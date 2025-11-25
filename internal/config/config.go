@@ -63,6 +63,15 @@ func (c *Config) Validate() error {
 	if c.Runner.MaxRunners < c.Runner.MinRunners {
 		return fmt.Errorf("MAX_RUNNERS must be >= MIN_RUNNERS")
 	}
+	if c.Runner.ScaleDownThreshold < 0 {
+		return fmt.Errorf("SCALE_DOWN_THRESHOLD must be >= 0")
+	}
+	if c.Runner.ScaleUpThreshold <= c.Runner.ScaleDownThreshold {
+		return fmt.Errorf("SCALE_UP_THRESHOLD must be > SCALE_DOWN_THRESHOLD")
+	}
+	if c.Runner.CheckInterval <= 0 {
+		return fmt.Errorf("CHECK_INTERVAL_SEC must be > 0")
+	}
 	return nil
 }
 
