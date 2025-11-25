@@ -35,6 +35,11 @@ func New(cfg *config.Config) (*Controller, error) {
 func (c *Controller) Run(ctx context.Context) error {
 	log.Println("controller starting...")
 
+	// Run initial reconcile immediately instead of waiting for first tick
+	if err := c.reconcile(ctx); err != nil {
+		log.Printf("initial reconcile error: %v", err)
+	}
+
 	ticker := time.NewTicker(c.cfg.Runner.CheckInterval)
 	defer ticker.Stop()
 
