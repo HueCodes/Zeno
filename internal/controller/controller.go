@@ -12,9 +12,10 @@ import (
 )
 
 type Controller struct {
-	cfg       *config.Config
-	ghClient  *github.Client
-	runnerMgr *runner.Manager
+	cfg          *config.Config
+	ghClient     *github.Client
+	runnerMgr    *runner.Manager
+	lastQueueLen int // Cache last queue length to avoid redundant scaling
 }
 
 func New(cfg *config.Config) (*Controller, error) {
@@ -63,6 +64,13 @@ func (c *Controller) reconcile(ctx context.Context) error {
 	}
 
 	currentRunners := c.runnerMgr.Count()
+
+	// Skip redundant scaling if queue unchanged and runners stable
+	if queuedJobs == c.lastQueueLen && currentRunners >= c.cfg.Runner.MinRunners && currentRunners <= c.cfg.Runner.MaxRunners {
+		return nil
+	}
+	c.lastQueueLen = queuedJobs
+
 	log.Printf("queued jobs: %d, current runners: %d", queuedJobs, currentRunners)
 
 	if queuedJobs >= c.cfg.Runner.ScaleUpThreshold && currentRunners < c.cfg.Runner.MaxRunners {
