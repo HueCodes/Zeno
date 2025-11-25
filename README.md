@@ -182,11 +182,11 @@ See [docs/roadmap.md](docs/roadmap.md) for detailed development plans.
 
 | Feature | Zeno | Actions Runner Controller | BuildKite | Jenkins |
 |---------|------|---------------------------|-----------|---------|
-| Kubernetes-native | ❌ | ✅ | ❌ | ❌ |
-| Standalone binary | ✅ | ❌ | ✅ | ❌ |
-| Multi-cloud | ✅ | Limited | ✅ | ✅ |
-| Webhook scaling | Roadmap | ✅ | ✅ | N/A |
-| Cost optimization | ✅ | Limited | ✅ | ❌ |
+| Kubernetes-native | No | Yes | No | No |
+| Standalone binary | Yes | No | Yes | No |
+| Multi-cloud | Yes | Limited | Yes | Yes |
+| Webhook scaling | Roadmap | Yes | Yes | N/A |
+| Cost optimization | Yes | Limited | Yes | No |
 | Setup complexity | Low | High | Medium | High |
 
 Zeno is designed for teams who want autoscaling runners without Kubernetes complexity.
