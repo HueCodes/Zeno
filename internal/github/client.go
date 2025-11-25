@@ -49,6 +49,12 @@ func (c *Client) GetQueuedWorkflowJobs(ctx context.Context) (int, error) {
 	}
 	defer resp.Body.Close()
 
+	// Handle rate limiting - GitHub returns 403 or 429 when rate limited
+	if resp.StatusCode == http.StatusForbidden || resp.StatusCode == http.StatusTooManyRequests {
+		resetTime := resp.Header.Get("X-RateLimit-Reset")
+		return 0, fmt.Errorf("rate limited (status: %d, reset: %s)", resp.StatusCode, resetTime)
+	}
+
 	if resp.StatusCode != http.StatusOK {
 		return 0, fmt.Errorf("unexpected status: %d", resp.StatusCode)
 	}
