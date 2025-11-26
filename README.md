@@ -134,65 +134,6 @@ make lint
 make fmt
 ```
 
-## Project Status
-
-Current implementation includes:
-- Core reconciliation loop with caching
-- GitHub API client with timeout and rate limit handling
-- Configuration validation
-- REST API endpoints
-- Metrics collection
-- Docker infrastructure
-
-In development:
-- Full Docker provider implementation
-
-Planned:
-- AWS EC2, GCP Compute Engine, Azure VM providers
-- Webhook-based event handling
-- Web-based dashboard
-
-## Roadmap
-
-See [docs/roadmap.md](docs/roadmap.md) for detailed development plans.
-
-**Phase 1 - Core Functionality**
-- Complete Docker provider implementation
-- Add comprehensive test coverage
-- Implement basic observability
-
-**Phase 2 - Cloud Providers**
-- AWS EC2 provider with spot instance support
-- GCP Compute Engine provider
-- Azure VM provider
-
-**Phase 3 - Advanced Features**
-- Webhook-based scaling for faster response times
-- Runner pool management with warm standby
-- Cost tracking and optimization
-- Multi-region deployment support
-
-**Phase 4 - Enterprise Features**
-- High availability with leader election
-- Advanced scheduling algorithms
-- Custom metrics and webhooks
-- Web-based management dashboard
-
-## Comparison
-
-| Feature | Zeno | Actions Runner Controller | BuildKite | Jenkins |
-|---------|------|---------------------------|-----------|---------|
-| Kubernetes-native | No | Yes | No | No |
-| Standalone binary | Yes | No | Yes | No |
-| Multi-cloud | Yes | Limited | Yes | Yes |
-| Webhook scaling | Roadmap | Yes | Yes | N/A |
-| Cost optimization | Yes | Limited | Yes | No |
-| Setup complexity | Low | High | Medium | High |
-
-Zeno is designed for teams who want autoscaling runners without Kubernetes complexity.
-
-## Contributing
-
 Contributions are welcome. Please follow these guidelines:
 
 1. Fork the repository
@@ -207,14 +148,6 @@ Contributions are welcome. Please follow these guidelines:
 - Maintain test coverage above 70%
 - Add documentation for public APIs
 - Use conventional commit messages
-
-### Pull Request Process
-
-1. Ensure CI pipeline passes
-2. Update documentation if needed
-3. Add entry to CHANGELOG if applicable
-4. Request review from maintainers
-5. Address review feedback
 
 ### Reporting Issues
 
