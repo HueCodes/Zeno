@@ -1,14 +1,108 @@
-# GitHub Configuration
-# GITHUB_TOKEN=ghp_your_token_here
-# GITHUB_ORG=your-org  # OR
-# GITHUB_REPO=owner/repo
+# Zeno Configuration Example
+# This file demonstrates all available configuration options
 
-# Runner Configuration
-# MIN_RUNNERS=1
-# MAX_RUNNERS=10
-# SCALE_UP_THRESHOLD=5
-# SCALE_DOWN_THRESHOLD=0
-# CHECK_INTERVAL_SEC=30
+# Server configuration
+server:
+  address: "0.0.0.0"
+  port: 8080
+  read_timeout: 15s
+  write_timeout: 15s
+  enable_auth: false
+  # api_key: "your-secret-api-key"  # Required if enable_auth is true
+  rate_limit_rps: 100
 
-# Logging
-# LOG_LEVEL=info
+# GitHub configuration
+github:
+  token: "${GITHUB_TOKEN}"  # Required: GitHub personal access token
+  organization: "your-org"   # Required if not using repository
+  # repository: "owner/repo" # Alternative to organization
+  runner_labels: ["self-hosted", "zeno"]
+  request_timeout: 30s
+  max_retries: 3
+  retry_backoff_base: 1s
+  retry_backoff_max: 30s
+  cache_ttl: 30s
+  rate_limit_buffer: 100
+
+# Scaling configuration
+scaling:
+  min_runners: 1
+  max_runners: 10
+  scale_up_threshold: 5
+  scale_down_threshold: 0
+  scale_up_hysteresis: 2       # Consecutive checks before scaling up
+  scale_down_hysteresis: 3     # Consecutive checks before scaling down
+  check_interval: 30s
+  cooldown_period: 60s
+  enable_predictive_scaling: false
+  prediction_window: 5m
+  graceful_termination: true
+  termination_timeout: 60s
+
+# Provider configuration
+provider:
+  type: "docker"  # Options: "docker" or "ec2"
+
+  # Docker provider configuration
+  docker:
+    host: "unix:///var/run/docker.sock"
+    image: "myoung34/github-runner:latest"
+    runner_work_dir: "/runner/_work"
+    network: "bridge"
+    cpu_limit: 1.0
+    memory_limit: 2147483648  # 2GB in bytes
+    labels:
+      environment: "production"
+      managed-by: "zeno"
+    volumes: []
+    pull_policy: "always"
+
+  # AWS EC2 provider configuration (use if provider.type is "ec2")
+  aws:
+    region: "us-east-1"
+    instance_type: "t3.medium"
+    ami: "ami-0c55b159cbfafe1f0"  # Ubuntu 20.04 LTS
+    subnet_id: "subnet-xxxxx"
+    security_group_ids:
+      - "sg-xxxxx"
+    key_name: "your-key-pair"
+    iam_instance_profile: "GitHubActionsRunnerRole"
+    use_spot: true
+    spot_max_price: "0.05"
+    tags:
+      Environment: "production"
+      ManagedBy: "zeno"
+    volume_size: 30
+    volume_type: "gp3"
+    user_data_script: |
+      #!/bin/bash
+      # Custom user data script
+      # Available placeholders: {{RUNNER_NAME}}, {{GITHUB_TOKEN}}, {{GITHUB_ORG}}, {{LABELS}}
+
+# Observability configuration
+observability:
+  enable_metrics: true
+  metrics_path: "/metrics"
+  enable_tracing: false
+  # tracing_endpoint: "http://jaeger:14268/api/traces"
+  health_check_path: "/health"
+  readiness_path: "/ready"
+
+# Leader election configuration (for high availability)
+leader_election:
+  enabled: false
+  lock_file_path: "/tmp/zeno-leader.lock"
+  lease_duration: 15s
+  renew_deadline: 10s
+  retry_period: 2s
+
+# Store configuration (for scaling history)
+store:
+  enabled: true
+  type: "file"
+  path: "/var/lib/zeno/events.json"
+  max_events: 1000
+
+# General configuration
+dry_run: false
+log_level: "info"  # Options: "debug", "info", "warn", "error"
