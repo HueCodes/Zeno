@@ -12,15 +12,6 @@ A lightweight controller for autoscaling self-hosted GitHub Actions runners.
 
 This project provides automated scaling of GitHub Actions runners based on workflow queue depth. It supports multiple infrastructure providers and aims to reduce operational costs while maintaining availability.
 
-## Features
-
-- Automated scaling based on GitHub Actions queue metrics
-- Support for multiple provider backends (Docker, AWS, GCP, Azure)
-- REST API for monitoring and management
-- Prometheus-compatible metrics endpoint
-- Configurable scaling thresholds and policies
-- Built-in analytics and decision tracking
-
 ## Requirements
 
 - Go 1.21 or higher
@@ -86,9 +77,6 @@ Configuration is managed through environment variables:
 
 See `.env.example` for complete configuration options.
 
-**Troubleshooting:**
-- GitHub API rate limits: 5000/hour for authenticated requests. Check `X-RateLimit-Reset` header if you see 403/429 errors.
-- Use standard logging to see reconciliation errors and scaling decisions.
 
 ## Architecture
 
@@ -142,13 +130,6 @@ Contributions are welcome. Please follow these guidelines:
 4. Ensure all tests pass and code is formatted
 5. Submit a pull request with clear description
 
-### Code Standards
-
-- Follow Go standard formatting (run `make fmt`)
-- Maintain test coverage above 70%
-- Add documentation for public APIs
-- Use conventional commit messages
-
 ### Reporting Issues
 
 When reporting bugs, include:
@@ -160,20 +141,6 @@ When reporting bugs, include:
 ## License
 
 This project is licensed under the MIT License. See LICENSE file for details.
-
-## Documentation
-
-- [Quick Start Guide](docs/quickstart.md) - Get started in 5 minutes
-- [Setup Guide](docs/setup.md) - Detailed setup instructions
-- [Architecture](docs/architecture.md) - System design and components
-- [API Reference](docs/api.md) - REST API documentation
-- [Contributing Guidelines](CONTRIBUTING.md) - How to contribute
-
-## Community
-
-- **Issues**: [GitHub Issues](https://github.com/HueCodes/Zeno/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/HueCodes/Zeno/discussions)
-- **Security**: See [SECURITY.md](docs/security.md) for vulnerability reporting
 
 ## Contact
 
